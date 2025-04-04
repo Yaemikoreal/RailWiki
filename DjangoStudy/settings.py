@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app01.apps.App01Config'  # 注册app01
+    'app01.apps.App01Config',  # 注册app01
+    'app01.characters',
+    'app01.guides'
 ]
 
 MIDDLEWARE = [
@@ -73,10 +75,8 @@ WSGI_APPLICATION = 'DjangoStudy.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': {},  # 必须保留空配置
+    'mongo': {}      # 占位
 }
 
 
