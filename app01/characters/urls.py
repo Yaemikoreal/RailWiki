@@ -1,10 +1,11 @@
 
 from django.urls import path
-from app01.characters import char_views
+from .CharViews import find_characters_list, find_character
 
 app_name = "characters"  # 命名空间（可选）
 
 urlpatterns = [
     # GET /api/characters/<str:character_id>/
-    path('<str:character_id>/', char_views.find_character),  # 查询游戏角色信息
+    path('paginationquery/', find_characters_list),  # 角色列表分页查询
+    path('any/', find_character),  # 查询游戏角色信息
 ]

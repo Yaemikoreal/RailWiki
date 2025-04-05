@@ -1,6 +1,6 @@
 # characters/urls.py
 from django.urls import path
-from . import guides_views
+from . import GuidesViews
 
 app_name = "characters"  # 命名空间（可选）
 

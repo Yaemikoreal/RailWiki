@@ -1,0 +1,348 @@
+2025-04-05 13:46:01 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 13:59:51 - app01.characters.char_views - INFO - 不存在该ID的角色
+2025-04-05 13:59:51 - django.request - WARNING - Not Found: /api/characters/paginationquery/
+2025-04-05 14:00:20 - app01.characters.char_views - INFO - 不存在该ID的角色
+2025-04-05 14:00:20 - django.request - WARNING - Not Found: /api/characters/paginationquery/
+2025-04-05 14:03:05 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\char_views.py changed, reloading.
+2025-04-05 14:07:52 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 14:09:01 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\char_views.py changed, reloading.
+2025-04-05 14:13:12 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 14:16:18 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 14:16:28 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\urls.py changed, reloading.
+2025-04-05 14:19:13 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\char_views.py changed, reloading.
+2025-04-05 14:20:18 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 14:20:21 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 14:45:14 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\services.py changed, reloading.
+2025-04-05 14:46:01 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\services.py changed, reloading.
+2025-04-05 14:48:26 - django.request - ERROR - Internal Server Error: /api/characters/paginationquery/
+Traceback (most recent call last):
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\characters\char_views.py", line 67, in find_characters_list
+    character_data = CharacterService.get_characters_list(data_dt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\characters\services.py", line 44, in get_characters_list
+    rarities = ",".join(rarity_lt)
+               ^^^^^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, int found
+2025-04-05 14:48:39 - django.request - ERROR - Internal Server Error: /api/characters/paginationquery/
+Traceback (most recent call last):
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\characters\char_views.py", line 67, in find_characters_list
+    character_data = CharacterService.get_characters_list(data_dt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\characters\services.py", line 44, in get_characters_list
+    rarities = ",".join(rarity_lt)
+               ^^^^^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, int found
+2025-04-05 14:48:59 - app01.characters.char_views - INFO - 查询角色信息成功!
+2025-04-05 14:49:05 - django.request - ERROR - Internal Server Error: /api/characters/paginationquery/
+Traceback (most recent call last):
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\characters\char_views.py", line 67, in find_characters_list
+    character_data = CharacterService.get_characters_list(data_dt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\characters\services.py", line 44, in get_characters_list
+    rarities = ",".join(rarity_lt)
+               ^^^^^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, int found
+2025-04-05 14:52:48 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\services.py changed, reloading.
+2025-04-05 14:52:59 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\services.py changed, reloading.
+2025-04-05 14:53:23 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\services.py changed, reloading.
+2025-04-05 15:02:58 - app01.characters.CharViews - INFO - 查询角色信息成功!
+2025-04-05 15:04:27 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:08:24 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:10:23 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:12:28 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:12:51 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:12:59 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:14:28 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:14:54 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:15:50 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:23:10 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:23:38 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\tools\CalculateTools.py changed, reloading.
+2025-04-05 15:28:38 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\tools\CalculateTools.py changed, reloading.
+2025-04-05 15:35:15 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 15:39:58 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 16:25:58 - django.request - WARNING - Not Found: /
+2025-04-05 16:25:58 - django.request - WARNING - Not Found: /favicon.ico
+2025-04-05 16:37:31 - django.request - WARNING - Not Found: /
+2025-04-05 16:41:12 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\DjangoStudy\urls.py changed, reloading.
+2025-04-05 16:44:52 - django.request - WARNING - Not Found: /
+2025-04-05 16:45:11 - django.request - WARNING - Not Found: /wikiindex/
+2025-04-05 16:45:30 - django.request - WARNING - Not Found: /bg1.jpg
+2025-04-05 16:45:40 - django.request - WARNING - Not Found: /bg2.jpg
+2025-04-05 16:50:51 - django.request - WARNING - Not Found: /
+2025-04-05 16:51:13 - django.request - WARNING - Not Found: /wikiindex/bg1.jpg
+2025-04-05 16:51:40 - django.request - WARNING - Not Found: /wikiindex/bg3.jpg
+2025-04-05 16:52:15 - django.request - WARNING - Not Found: /wikiindex/bg1.jpg
+2025-04-05 16:58:31 - django.request - ERROR - Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\app01\views.py", line 11, in home
+    return redirect('wiki_index')  # 使用命名 URL
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_test\DjangoStudy\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'wiki_index' not found. 'wiki_index' is not a valid view function or pattern name.
+2025-04-05 17:21:58 - django.request - WARNING - Not Found: /api/characters/
+2025-04-05 17:22:59 - django.request - WARNING - Not Found: /api/characters/
+2025-04-05 17:23:47 - django.request - WARNING - Method Not Allowed: /api/characters/paginationquery/
+2025-04-05 17:24:31 - django.request - WARNING - Method Not Allowed: /api/characters/paginationquery/
+2025-04-05 17:31:05 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 17:31:50 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 17:32:38 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:33:43 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:33:46 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:36:35 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:38:01 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:38:01 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:40:18 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:40:18 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:20 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:20 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:22 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:22 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:24 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:24 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:24 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:24 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:36 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:36 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:37 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:37 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:42:39 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:42:39 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:43:23 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:43:23 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 17:43:26 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 17:43:26 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:02:16 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:02:16 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:02:19 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:02:19 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:02:21 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:02:21 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:02:22 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:02:22 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:02:45 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:02:45 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:02:47 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:02:47 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:04:11 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:04:11 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:04:14 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:04:14 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:04:15 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:04:15 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:04:16 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:04:16 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:15:58 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:15:58 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:16:01 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:16:01 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:17:49 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:17:49 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:24:26 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:24:29 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:25:01 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:25:01 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:26:22 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:26:22 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:26:26 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:26:26 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:29:10 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:29:10 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:29:12 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:29:12 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:30:37 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:30:37 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:30:57 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:30:57 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:32:34 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 18:33:59 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 18:34:51 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 18:34:55 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 18:35:03 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 18:35:08 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\CharViews.py changed, reloading.
+2025-04-05 18:37:44 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:37:44 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:44:26 - django.utils.autoreload - INFO - D:\python_test\DjangoStudy\app01\characters\Services.py changed, reloading.
+2025-04-05 18:47:25 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:48:27 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:49:17 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:49:17 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 18:49:46 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 18:49:46 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:01:10 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:02:01 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:03:09 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:03:10 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:03:57 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:04:08 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:04:08 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:08:02 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:08:24 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:08:48 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:08:49 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:08:57 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:08:58 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:13 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:13 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:16 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:16 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:18 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:18 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:20 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:20 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:27 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:27 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:27 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:27 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:28 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:28 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:30 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:30 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:32 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:32 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:33 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:33 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:35 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:35 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:13:36 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:13:36 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:26 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:26 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:36 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:36 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:38 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:38 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:40 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:40 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:42 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:42 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:43 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:43 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:44 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:44 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:47 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:47 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:49 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:49 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:14:50 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:14:50 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:27:21 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:27:21 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:27:22 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:27:22 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:27:23 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:27:23 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:04 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:04 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:06 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:06 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:08 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:08 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:09 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:09 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:11 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:11 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:13 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:13 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:14 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:14 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:15 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:15 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:16 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:16 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:17 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:17 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:19 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:20 - django.request - WARNING - Not Found: /wikiindex/undefined
+2025-04-05 19:31:21 - app01.characters.CharViews - INFO - 查询成功!
+2025-04-05 19:31:21 - django.request - WARNING - Not Found: /wikiindex/undefined

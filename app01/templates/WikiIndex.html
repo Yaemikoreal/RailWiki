@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailWiki - 崩坏：星穹铁道百科</title>
+    <style>
+        /* 样式部分保持不变 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', sans-serif; }
+        body { min-height: 100vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("{% static 'images/bg1.png' %}") center/cover fixed; }
+        .main-container { display: flex; flex-direction: column; align-items: center; padding: 2vh 5%; }
+        .logo-section { text-align: center; margin: 2vh 0; animation: fadeInDown 1s ease; }
+        .logo { width: 80px; filter: drop-shadow(0 0 10px rgba(113, 76, 255, 0.8)); }
+        .title { color: #fff; font-size: 2.5rem; text-shadow: 0 0 20px #714CFF; margin-top: 10px; }
+        .nav-buttons { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; justify-content: center; }
+        .nav-button { background: rgba(17, 23, 41, 0.8); border: 2px solid #4A5568; padding: 15px 25px; border-radius: 10px; color: #CBD5E0; font-size: 1.2rem; min-width: 180px; transition: all 0.3s ease; }
+        .filters { width: 100%; max-width: 1200px; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; backdrop-filter: blur(5px); }
+        .filter-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .filter-item { display: flex; align-items: center; gap: 5px; color: white; }
+        select { background: rgba(0,0,0,0.5); color: white; border: 1px solid #714CFF; padding: 8px 15px; border-radius: 5px; }
+        .character-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 15px; width: 100%; max-width: 1600px; padding: 20px 0; }
+        .character-card { background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease; text-align: center; }
+        .character-card:hover { transform: translateY(-5px); }
+        .character-img { width: 100%; height: 120px; object-fit: cover; }
+        .character-name { color: white; padding: 8px; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #714CFF; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        .pagination-controls { width: 100%; text-align: center; padding: 20px 0; color: white; }
+        .pagination-controls button { background: rgba(113, 76, 255, 0.3); border: 1px solid #714CFF; color: white; padding: 8px 16px; margin: 0 5px; border-radius: 4px; cursor: pointer; }
+        .character-meta { padding: 5px; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .element { padding: 2px 5px; border-radius: 3px; }
+        .element.量子 { background: #9b59b6; } .element.火 { background: #e74c3c; }
+        .rarity-5 { color: gold; } .rarity-4 { color: silver; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @media (max-width: 1200px) { .character-grid { grid-template-columns: repeat(5, 1fr); } }
+        @media (max-width: 768px) { .nav-buttons { flex-direction: column; width: 100%; } .nav-button { width: 100%; } .character-grid { grid-template-columns: repeat(3, 1fr); } }
+        /* 新增错误提示样式 */
+        .error-toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #e74c3c; color: white; padding: 12px 24px; border-radius: 4px; z-index: 1000; animation: fadeInOut 2.5s; }
+        @keyframes fadeInOut { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <!-- Logo区域 -->
+        <div class="logo-section">
+            <img src="{% static 'images/logo.jpg' %}" alt="RailWiki Logo" class="logo">
+            <h1 class="title">RailWiki</h1>
+        </div>
+
+        <!-- 导航按钮（已移除点击事件） -->
+        <div class="nav-buttons">
+            <button class="nav-button">🌟 角色图鉴</button>
+            <button class="nav-button">📖 攻略百科</button>
+            <button class="nav-button">⚒️ 养成指南</button>
+            <button class="nav-button">🛡️ 敌人资料</button>
+        </div>
+
+        <!-- 筛选器 -->
+        <div class="filters">
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label>属性：</label>
+                    <select id="element-filter">
+                        <option value="">全部</option>
+                        <option>火</option>
+                        <option>冰</option>
+                        <option>量子</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>命途：</label>
+                    <select id="path-filter">
+                        <option value="">全部</option>
+                        <option>毁灭</option>
+                        <option>巡猎</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>稀有度：</label>
+                    <select id="rarity-filter">
+                        <option value="">全部</option>
+                        <option>5星</option>
+                        <option>4星</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 加载状态 & 分页 -->
+        <div class="pagination-controls">
+            <div id="loading" style="display: none;">
+                <div class="loader"></div>
+                加载中...
+            </div>
+            <div id="pagination"></div>
+        </div>
+
+        <!-- 角色展示区 -->
+        <div class="character-grid" id="character-container"></div>
+    </main>
+
+    <!-- 错误提示容器 -->
+    <div id="errorToast" class="error-toast" style="display: none;"></div>
+
+    <script>
+        // 全局配置
+        let currentPage = 1;        // 当前页码
+        const pageSize = 10;        // 每页显示数量
+        let filterTimeout;          // 防抖定时器
+
+        // 主加载函数：获取并显示角色数据
+        async function loadCharacters() {
+            try {
+                showLoading(true);  // 显示加载动画
+
+                // 🛠️ 步骤1：构建安全请求参数
+                const params = new URLSearchParams({
+                    page: currentPage,
+                    page_size: pageSize
+                });
+
+                // 🔍 获取筛选条件（关键修正）
+                const elements = getSelectedValues('element-filter');
+                const paths = getSelectedValues('path-filter');
+                const rarities = getSelectedValues('rarity-filter');
+
+                // ✅ 正确添加非空参数
+                if (elements.length > 0) params.append('elements', elements.join(','));
+                if (paths.length > 0) params.append('paths', paths.join(','));
+                if (rarities.length > 0) params.append('rarities', rarities.join(','));
+
+                console.log('请求参数：', params.toString());  // 调试日志
+
+                // ⏱️ 添加请求超时控制（10秒）
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                // 📡 发送API请求
+                const response = await fetch(`/api/characters/paginationquery/?${params}`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);  // 清除超时计时器
+
+                // ❌ 处理HTTP错误状态
+                if (!response.ok) throw new Error(`请求失败：${response.status} ${response.statusText}`);
+
+                // 📦 解析响应数据
+                const data = await response.json();
+                console.log('收到数据：', data);  // 调试日志
+
+                // 🖼️ 更新界面显示
+                updateCharacterDisplay(data);
+                updatePagination(data.total);
+
+            } catch (error) {
+                // 🚨 错误处理
+                console.error('加载失败：', error);
+                showToast(`加载失败：${error.message}`);
+
+                // 🔄 网络错误自动重试（排除用户取消的情况）
+                if (error.name !== 'AbortError') {
+                    setTimeout(() => loadCharacters(), 2000);  // 2秒后重试
+                }
+            } finally {
+                showLoading(false);  // 隐藏加载动画
+            }
+        }
+
+        // 🛠️ 辅助函数：获取选中的筛选值
+        function getSelectedValues(selectId) {
+            const select = document.getElementById(selectId);
+            return Array.from(select.options)
+                .filter(option => option.selected && option.value !== '')  // 排除空值
+                .map(option => option.value);
+        }
+
+        // 🎨 更新角色显示
+        function updateCharacterDisplay(data) {
+            const container = document.getElementById('character-container');
+            container.innerHTML = data.characters.map(char => `
+                <div class="character-card">
+                    <img src="${char.icon_url}"
+                         alt="${char.name}"
+                         class="character-img"
+                         onerror="this.src='{% static 'images/default.png' %}'"> <!-- 图片加载失败处理 -->
+                    <div class="character-name">${char.name}</div>
+                    <div class="character-meta">
+                        <span class="element ${char.element}">${char.element}</span>
+                        <span class="rarity-${char.rarity}">${'★'.repeat(char.rarity)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 🔢 更新分页控件
+        function updatePagination(total) {
+            const totalPages = Math.ceil(total / pageSize);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = `
+                <button ${currentPage === 1 ? 'disabled' : ''}
+                        onclick="changePage(${currentPage - 1})">上一页</button>
+                <span>${currentPage} / ${totalPages}</span>
+                <button ${currentPage >= totalPages ? 'disabled' : ''}
+                        onclick="changePage(${currentPage + 1})">下一页</button>
+            `;
+        }
+
+        // 🔄 分页操作
+        function changePage(newPage) {
+            currentPage = Math.max(1, newPage);  // 页码不能小于1
+            loadCharacters();
+            window.scrollTo({ top: 0, behavior: 'smooth' });  // 滚动到顶部
+        }
+
+        // ⏳ 显示/隐藏加载状态
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        // 💬 显示提示信息
+        function showToast(message) {
+            const toast = document.getElementById('errorToast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2500);
+        }
+
+        // 🎯 初始化事件监听（带防抖处理）
+        document.querySelectorAll('.filter-item select').forEach(select => {
+            select.addEventListener('change', () => {
+                clearTimeout(filterTimeout);  // 清除之前的定时器
+                filterTimeout = setTimeout(() => {
+                    currentPage = 1;  // 重置到第一页
+                    loadCharacters();
+                }, 300);  // 300毫秒防抖延迟
+            });
+        });
+
+        // 🚀 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', loadCharacters);
+
+        // 🚫 移除所有旧版跳转逻辑（关键修复）
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.onclick = null;  // 清除点击事件
+        });
+    </script>
+</body>
+</html>

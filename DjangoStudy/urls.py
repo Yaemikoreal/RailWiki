@@ -18,9 +18,13 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 
+from app01.views import index,home
+
 urlpatterns = [
     path('admin/', admin.site.urls),  # Django 后台
-
+    # 根路径映射到 home 视图
+    path('', home, name='home'),
+    path('wikiindex/', index, name='wiki index'),
     # API 路由分配
     path('api/characters/', include('app01.characters.urls')),  # 角色相关路由
     path('api/guides/', include('app01.guides.urls')),  # 攻略相关路由

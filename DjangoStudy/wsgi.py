@@ -1,3 +1,6 @@
+# 在Django的wsgi.py/asgi.py最顶部添加
+from .logger_config import setup_logger
+setup_logger()
 """
 WSGI config for DjangoStudy project.
 
