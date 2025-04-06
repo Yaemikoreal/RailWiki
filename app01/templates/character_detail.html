@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>角色详情</title>
+    <style>
+        /* 详情页样式 */
+        .character-detail {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+        }
+        .detail-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="character-detail" id="detail-container">
+        <div class="loading">加载中...</div>
+    </div>
+
+    <script>
+        // 获取角色ID
+        function getCharacterId() {
+            // 方式1：从URL参数获取
+            const urlParams = new URLSearchParams(window.location.search);
+            let id = urlParams.get('id');
+
+            // 方式2：从localStorage获取（推荐）
+            if (!id) id = localStorage.getItem('selectedCharacterId');
+
+            return parseInt(id) || 0;
+        }
+
+        // 加载角色详情
+        async function loadCharacterDetail() {
+            const characterId = getCharacterId();
+            if (!characterId) {
+                alert('无效的角色ID');
+                window.history.back();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/characters/${characterId}/`);
+                const data = await response.json();
+
+                document.getElementById('detail-container').innerHTML = `
+                    <img src="${data.icon_url}"
+                         class="detail-img"
+                         onerror="this.src='{% static 'images/default.png' %}'">
+                    <h1>${data.name}</h1>
+                    <div class="meta">
+                        <p>属性：<span class="element">${data.element}</span></p>
+                        <p>命途：${data.path}</p>
+                        <p>星级：${'★'.repeat(data.rarity)}</p>
+                        <p>${data.description}</p>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('加载失败:', error);
+                document.getElementById('detail-container').innerHTML = `
+                    <div class="error">加载失败，请<a href="javascript:location.reload()">重试</a></div>
+                `;
+            }
+        }
+
+        // 页面加载时执行
+        window.onload = loadCharacterDetail;
+    </script>
+</body>
+</html>
