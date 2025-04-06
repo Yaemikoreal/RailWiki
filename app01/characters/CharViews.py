@@ -7,6 +7,10 @@ import logging
 
 logger = logging.getLogger(__name__)  # 自动继承全局配置
 
+"""
+角色相关视图函数集
+"""
+
 
 @api_view(['GET'])
 def character_detail(request, pk):

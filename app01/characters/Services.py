@@ -4,6 +4,10 @@ import logging
 
 logger = logging.getLogger(__name__)  # 自动继承全局配置
 
+"""
+角色相关数据库查询操作函数
+"""
+
 
 class CharacterService:
     @classmethod
@@ -14,8 +18,27 @@ class CharacterService:
         :return:
         """
         try:
+            query_sql = """
+                    SELECT
+                        id,
+                        NAME,
+                        element,
+                        path,
+                        rarity,
+                        position,
+                        description,
+                        release_date,
+                        character_image_1,
+                        character_image_2,
+                        character_image_3 
+                    FROM
+                        characters
+                        RIGHT JOIN character_images ON characters.id = character_images.character_id 
+                    WHERE
+                        id = %s
+                """
             result = MySQLExecutor.execute(
-                "SELECT * FROM characters WHERE id = %s",
+                query_sql,
                 params=(character_id,),
                 fetch_one=True
             )
@@ -24,7 +47,8 @@ class CharacterService:
             keys = [
                 "id", "name", "element",
                 "path", "rarity", "position",
-                "description", "release_date"
+                "description", "release_date",
+                "character_image_1", "character_image_2", "character_image_3"
             ]
             character_dt = dict(zip(keys, result))
             return character_dt
@@ -67,7 +91,21 @@ class CharacterService:
             params.extend(map(str, rarities))  # 统一转为字符串
 
         # 构建完整SQL
-        sql = "SELECT id,name,element,path,rarity,position FROM characters"
+        sql = """
+            SELECT
+                id,
+                NAME,
+                element,
+                path,
+                rarity,
+                position,
+                character_image_1,
+                character_image_2,
+                character_image_3 
+            FROM
+                characters
+                RIGHT JOIN character_images ON characters.id = character_images.character_id
+            """
         if conditions:
             sql += " WHERE " + " AND ".join(conditions)
 
@@ -80,7 +118,8 @@ class CharacterService:
             )
             keys = [
                 "id", "name", "element",
-                "path", "rarity", "position"
+                "path", "rarity", "position",
+                "character_image_1", "character_image_2", "character_image_3"
             ]
             # 结果整合为list
             characters_lt = [tools.tuple_to_dict(keys=keys, data=row) for row in result]

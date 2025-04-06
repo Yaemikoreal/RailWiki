@@ -1,4 +1,4 @@
-
+# 角色Wiki子路由
 from django.urls import path
 from .CharViews import find_characters_list, character_detail, show_character_detail
 

@@ -1,3 +1,5 @@
+# 工具类计算函数
+
 def list_to_quoted_string(input_list, separator=", "):
     """
     将列表转换为带单引号并用指定分隔符连接的字符串。
