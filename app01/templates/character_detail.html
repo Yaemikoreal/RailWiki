@@ -38,8 +38,8 @@
         /* 角色头部信息 */
         .character-header {
             display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 60px;
+            margin-bottom: 80px;
             position: relative;
         }
 
@@ -168,8 +168,12 @@
 
     <main class="main-content">
         <!-- 角色头部信息 -->
-        <div class="character-header">
-            <img src="{{ character.thumbnail }}"
+        <div class="character-header"
+                style="background-image: url('{{ character.character_image_1 }}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;">
+            <img src="{{ character.character_image_3 }}"
                  alt="{{ character.name }}"
                  class="character-thumbnail"
                  onerror="this.src='{% static 'images/default.png' %}'">
@@ -214,7 +218,7 @@
             <!-- 右侧背景故事 -->
             <div class="character-story">
                 <h2 class="section-title">背景故事</h2>
-                <p>{{ character.story }}</p>
+                <p>{{ character.description }}</p>
             </div>
         </div>
     </main>
