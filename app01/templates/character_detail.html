@@ -184,6 +184,13 @@
             transition: all 0.3s ease; /* 平滑过渡动画 */
             box-shadow: 0 2px 8px rgba(154, 134, 195, 0.2); /* 淡紫色阴影 */
         }
+        .constellation-item:hover {
+            transform: translateY(-3px); /* 微提升动画 */
+            background: rgba(154, 134, 195, 0.1); /* 淡紫色背景 */
+            border-color: #9A86C3; /* 悬停时边框颜色加深 */
+            box-shadow: 0 4px 12px rgba(154, 134, 195, 0.4); /* 深化阴影 */
+            cursor: pointer; /* 提示可交互 */
+        }
 
         .stats-grid {
             margin-bottom: 25px;
@@ -202,25 +209,40 @@
             cursor: pointer; /* 提示可交互 */
         }
 
+        /* 技能标题样式 */
         .skill-title {
             display: flex;
             align-items: center;
             gap: 12px;
             color: var(--text-light);
             margin-bottom: 10px;
+            font-family: "Roboto", "Arial", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .constellation-title{
-             display: flex;
+            display: flex;
             align-items: center;
             gap: 12px;
             color: var(--text-light);
             margin-bottom: 10px;
+            font-family: "Roboto", "Arial", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .skill-icon {
             width: 28px;
             height: 28px;
             border-radius: 5px;
+        }
+        .character-constellation{
+             width: 100px;
+             height: 100px;
         }
 
         /* 背景故事 */
@@ -314,9 +336,12 @@
                 <h2 class="section-title">角色星魂</h2>
                 {% for constellation in constellations %}
                 <div class="constellation-item">
-                    <div class="constellation-title">
-                        <span>{{ constellation.level }}</span>
-                        <span>{{ constellation.name }}</span>
+                     <img src="{{ constellation.image}}"
+                         alt="{{ constellation.name}}"
+                         class="character-constellation"
+                         onerror="this.src='{% static 'images/default.png' %}'">
+                    <div class="skill-title">
+                        <span>{{ constellation.level }}{{ constellation.name }}</span>
                     </div>
                     <p class="constellation-desc">{{ constellation.description }}</p>
                 </div>
@@ -459,6 +484,15 @@
                 const constellationTitle = document.createElement('div');
                 constellationTitle.className = 'constellation-title';
 
+                // 星魂图片元素
+                const constellationImage = document.createElement('img');
+                constellationImage.src = constellation.image;
+                constellationImage.alt = constellation.name;
+                constellationImage.className = 'character-constellation';
+                constellationImage.onerror = function () {
+                    this.src = '/static/images/default.png'; // 默认图片路径
+                };
+
                 // 星魂名称文本
                 const constellationName = document.createElement('span');
                 constellationName.textContent = constellation.name;
@@ -473,8 +507,10 @@
                 constellationDesc.textContent = constellation.description || '无描述';
 
                 // 将所有组件组合到星魂项中
-                constellationItem.appendChild(constellationType);
-                constellationItem.appendChild(constellationName);
+                constellationTitle.appendChild(constellationImage);
+                constellationTitle.appendChild(constellationType);
+                constellationTitle.appendChild(constellationName);
+                constellationItem.appendChild(constellationTitle);
                 constellationItem.appendChild(constellationDesc);
 
                 // 添加到星魂列表容器
