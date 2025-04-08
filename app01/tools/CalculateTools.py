@@ -35,3 +35,15 @@ def tuple_to_dict(keys, data):
 
     # 使用 zip 将 keys 和 data 组合成字典
     return dict(zip(keys, data))
+
+
+def calculate_talents(result: tuple) -> []:
+    talent_data = []
+    for it in result:
+        data_dt = {
+            "name": it[0],
+            "type": it[1],
+            "description": it[2]
+        }
+        talent_data.append(data_dt)
+    return talent_data

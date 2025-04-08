@@ -130,3 +130,31 @@ class CharacterService:
             print(f"数据库查询异常: {str(e)}")
             return None
 
+    @classmethod
+    def get_character_talent(cls, char_id):
+        """
+        查询单个角色的天赋和技能信息
+        :return:
+        """
+        try:
+            query_sql = """
+                    SELECT
+                        skill_name,
+                        skill_type,
+                        skill_description
+                    FROM
+                        character_talent
+                    WHERE
+                        character_id = %s
+                """
+            result = MySQLExecutor.execute(
+                query_sql,
+                params=(char_id,),
+                fetch_all=True
+            )
+            if not result:  # 处理空结果
+                return None
+            return result
+        except Exception as e:
+            logger.error(f"角色技能信息查询出错: {str(e)}")
+

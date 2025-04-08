@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render, redirect
 from app01.characters.Services import CharacterService
+import app01.tools.CalculateTools as tools
 import logging
 
 logger = logging.getLogger(__name__)  # 自动继承全局配置
@@ -22,27 +23,22 @@ def character_detail(request, pk):
     """
     character_id = pk
     try:
-        # 1. 获取角色数据
         character_data = CharacterService.get_character_msg(character_id)
 
-        # 2. 处理空结果
         if not character_data:
             result_msg = "不存在该ID的角色"
             logger.info(result_msg)
             return Response(result_msg, status=status.HTTP_404_NOT_FOUND)
 
-        # 3. 返回成功响应
         logger.info("查询角色信息成功!")
         return Response(character_data, status=status.HTTP_200_OK)
 
     except ValueError as e:
-        # 4. 处理业务逻辑错误
         logger.error(f"查询出错:{str(e)}")
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as e:
         logger.error(f"查询出错(服务器内部错误):{str(e)}")
-        # 5. 处理未知错误
         return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -100,3 +96,32 @@ def show_character_detail(request):
     except Exception as e:
         logger.error(f"页面渲染失败: {str(e)}")
         return render(request, 'wiki_index.html', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def find_character_talent(request, char_id):
+    """
+    查询单个角色天赋技能信息
+    :param char_id: 需要查询的角色ID
+    :param request:
+    :return:
+    """
+    try:
+        talent_data_tuple = CharacterService.get_character_talent(char_id)
+        talent_data = tools.calculate_talents(talent_data_tuple)
+
+        if not talent_data:
+            result_msg = "不存在该角色的技能信息"
+            logger.info(result_msg)
+            return Response(result_msg, status=status.HTTP_404_NOT_FOUND)
+
+        logger.info("查询角色技能信息成功!")
+        return Response(talent_data, status=status.HTTP_200_OK)
+
+    except ValueError as e:
+        logger.error(f"查询出错:{str(e)}")
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    except Exception as e:
+        logger.error(f"查询出错(服务器内部错误):{str(e)}")
+        return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
