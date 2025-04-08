@@ -108,6 +108,7 @@ def find_character_talent(request, char_id):
     """
     try:
         talent_data_tuple = CharacterService.get_character_talent(char_id)
+        # 整理角色技能信息数据结构
         talent_data = tools.calculate_talents(talent_data_tuple)
 
         if not talent_data:
@@ -117,6 +118,34 @@ def find_character_talent(request, char_id):
 
         logger.info("查询角色技能信息成功!")
         return Response(talent_data, status=status.HTTP_200_OK)
+
+    except ValueError as e:
+        logger.error(f"查询出错:{str(e)}")
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    except Exception as e:
+        logger.error(f"查询出错(服务器内部错误):{str(e)}")
+        return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def find_characters_constellation(request, char_id):
+    """
+        查询单个角色星魂信息查询
+        :param char_id: 需要查询的角色ID
+        :param request:
+        :return:
+        """
+    try:
+        constellation_data_tuple = CharacterService.get_character_constellation(char_id)
+        constellation_data = tools.calculate_constellation(constellation_data_tuple)
+        if not constellation_data:
+            result_msg = "不存在该角色的星魂信息"
+            logger.info(result_msg)
+            return Response(result_msg, status=status.HTTP_404_NOT_FOUND)
+
+        logger.info("查询角色星魂信息成功!")
+        return Response(constellation_data, status=status.HTTP_200_OK)
 
     except ValueError as e:
         logger.error(f"查询出错:{str(e)}")

@@ -153,6 +153,15 @@
             border: 1px solid rgba(113, 76, 255, 0.2);
         }
 
+        /* 星魂列表 */
+        .constellation-list{
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 12px;
+            color: var(--text-light);
+            border: 1px solid rgba(113, 76, 255, 0.2);
+        }
+
         /* 基础技能项样式 */
         .skill-item {
             margin-bottom: 25px;
@@ -165,6 +174,16 @@
             box-shadow: 0 2px 8px rgba(154, 134, 195, 0.2); /* 淡紫色阴影 */
         }
 
+        .constellation-item{
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3); /* 半透明白色背景 */
+            border: 1px solid rgba(154, 134, 195, 0.6); /* 淡紫色边框（主色） */
+            border-radius: 12px; /* 圆角边框，柔和视觉 */
+            border-left: 4px solid #9A86C3; /* 加粗左边框，突出视觉层次 */
+            transition: all 0.3s ease; /* 平滑过渡动画 */
+            box-shadow: 0 2px 8px rgba(154, 134, 195, 0.2); /* 淡紫色阴影 */
+        }
 
         .stats-grid {
             margin-bottom: 25px;
@@ -191,6 +210,13 @@
             margin-bottom: 10px;
         }
 
+        .constellation-title{
+             display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
         .skill-icon {
             width: 28px;
             height: 28px;
@@ -259,7 +285,7 @@
             </div>
         </div>
 
-        <!-- 主体内容 -->
+        <!-- 主体内容，包含技能区和故事区 -->
         <div class="character-body">
             <!-- 左侧技能区 -->
             <div class="skill-list">
@@ -280,6 +306,29 @@
                 <p>{{ character.description }}</p>
             </div>
         </div>
+
+        <!-- 主体内容，星魂区和光锥区 -->
+        <div class="character-body">
+            <!-- 左侧星魂区 -->
+            <div class="constellation-list">
+                <h2 class="section-title">角色星魂</h2>
+                {% for constellation in constellations %}
+                <div class="constellation-item">
+                    <div class="constellation-title">
+                        <span>{{ constellation.level }}</span>
+                        <span>{{ constellation.name }}</span>
+                    </div>
+                    <p class="constellation-desc">{{ constellation.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 右侧光锥区 -->
+            <div class="character-story">
+                <h2 class="section-title">背景故事</h2>
+                <p>{{ character.description }}</p>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -293,7 +342,7 @@
             });
         }
 
-        // 确保 DOM 加载完成后执行脚本
+        // 确保 DOM 加载完成后执行脚本,(获取角色技能)
         document.addEventListener('DOMContentLoaded', function() {
             // 1. 从 URL 中提取角色ID
             const urlSearchParams = new URLSearchParams(window.location.search);
@@ -306,7 +355,7 @@
             }
 
             // 2. 定义请求接口的 URL
-            const apiEndpoint = `/api/characters/talent/${charId}/`; // 根据你的路由配置调整路径
+            const apiEndpoint = `/api/characters/talent/${charId}/`; // 根据路由配置调整路径
 
             // 3. 发起 AJAX 请求获取角色技能数据
             fetch(apiEndpoint)
@@ -326,6 +375,35 @@
                     document.getElementById('error-message').innerHTML = `错误: ${error.message}`;
                 });
         });
+
+        // 确保 DOM 加载完成后执行脚本，(获取角色星魂)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const charId = urlSearchParams.get('id');
+
+            if (!charId) {
+                document.getElementById('error-message').innerHTML = '角色ID缺失，请提供有效的角色ID。';
+                return;
+            }
+
+            const apiEndpoint = `/api/characters/constellation/${charId}/`; // 根据路由配置调整路径
+
+            fetch(apiEndpoint)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP 错误! 状态码: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // 渲染技能数据到页面
+                    renderConstellation(data);
+                })
+                .catch(error => {
+                    document.getElementById('error-message').innerHTML = `错误: ${error.message}`;
+                });
+        });
+
 
         // 函数：将技能数据渲染为 HTML 列表
         function renderSkills(skillList) {
@@ -348,11 +426,7 @@
 
                 // 技能类型文本
                 const skillType = document.createElement('span');
-                skillType.textContent = skill.type;
-
-                // 将图标和名称添加到标题容器
-                skillTitle.appendChild(skillName);
-                skillTitle.appendChild(skillType);
+                skillType.textContent = "【"+ skill.type + "】";
 
                 // 技能描述文本
                 const skillDesc = document.createElement('p');
@@ -360,11 +434,51 @@
                 skillDesc.textContent = skill.description || '无描述';
 
                 // 将所有组件组合到技能项中
+                skillTitle.appendChild(skillType);
+                skillTitle.appendChild(skillName);
                 skillItem.appendChild(skillTitle);
                 skillItem.appendChild(skillDesc);
 
                 // 添加到技能列表容器
                 skillContainer.appendChild(skillItem);
+            });
+        }
+
+        // 函数：将技能数据渲染为 HTML 列表
+        function renderConstellation(constellationList) {
+            // 找到技能列表容器
+            const skillContainer = document.querySelector('.constellation-list');
+
+            // 遍历每个星魂数据
+            constellationList.forEach(constellation => {
+                // 创建星魂项容器
+                const constellationItem = document.createElement('div');
+                constellationItem.className = 'constellation-item';
+
+                // 创建星魂标题（名称 + 类型）
+                const constellationTitle = document.createElement('div');
+                constellationTitle.className = 'constellation-title';
+
+                // 星魂名称文本
+                const constellationName = document.createElement('span');
+                constellationName.textContent = constellation.name;
+
+                // 星魂等级文本
+                const constellationType = document.createElement('span');
+                constellationType.textContent = "【" + constellation.level + "】";
+
+                // 星魂描述文本
+                const constellationDesc = document.createElement('p');
+                constellationDesc.className = 'constellationName-desc';
+                constellationDesc.textContent = constellation.description || '无描述';
+
+                // 将所有组件组合到星魂项中
+                constellationItem.appendChild(constellationType);
+                constellationItem.appendChild(constellationName);
+                constellationItem.appendChild(constellationDesc);
+
+                // 添加到星魂列表容器
+                skillContainer.appendChild(constellationItem);
             });
         }
     </script>

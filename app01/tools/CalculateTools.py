@@ -47,3 +47,16 @@ def calculate_talents(result: tuple) -> []:
         }
         talent_data.append(data_dt)
     return talent_data
+
+
+def calculate_constellation(result: tuple) -> []:
+    constellation = []
+    for it in result:
+        data_dt = {
+            "name": it[1],
+            "level": it[2],
+            "description": it[3],
+            "image": f"""/static/images/characters/{it[0]}/constellation_{it[2]}.png"""
+        }
+        constellation.append(data_dt)
+    return constellation

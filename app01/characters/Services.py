@@ -158,3 +158,31 @@ class CharacterService:
         except Exception as e:
             logger.error(f"角色技能信息查询出错: {str(e)}")
 
+    @classmethod
+    def get_character_constellation(cls, char_id):
+        """
+        查询单个角色的星魂信息
+        :return:
+        """
+        try:
+            query_sql = """
+               SELECT
+                   character_id,
+                   constellation_name,
+                   constellation_level,
+                   constellation_description
+               FROM
+                   character_constellation
+               WHERE
+                   character_id = %s
+               """
+            result = MySQLExecutor.execute(
+                query_sql,
+                params=(char_id,),
+                fetch_all=True
+            )
+            if not result:  # 处理空结果
+                return None
+            return result
+        except Exception as e:
+            logger.error(f"角色星魂信息查询出错: {str(e)}")
