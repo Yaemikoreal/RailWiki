@@ -60,3 +60,20 @@ def calculate_constellation(result: tuple) -> []:
         }
         constellation.append(data_dt)
     return constellation
+
+
+def calculate_light_cone(result: tuple) -> []:
+    light_cone = []
+    for it in result:
+        data_dt = {
+            "name": it[1],
+            "rarity": it[2],
+            "base_attack": it[3],
+            "base_hp": it[4],
+            "base_defense": it[5],
+            "skill_name": it[6],
+            "skill_effect": it[7],
+            "cone_image": f"""/static/images/lightcone/{it[1]}.png"""
+        }
+        light_cone.append(data_dt)
+    return light_cone

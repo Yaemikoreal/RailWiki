@@ -154,3 +154,31 @@ def find_characters_constellation(request, char_id):
     except Exception as e:
         logger.error(f"查询出错(服务器内部错误):{str(e)}")
         return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def find_light_cone(request, char_id):
+    """
+    获取角色适配光锥信息
+    :param request:
+    :param char_id: 角色ID
+    :return:
+    """
+    try:
+        light_cone_tuple = CharacterService.get_light_cone(char_id)
+        light_cone_data = tools.calculate_light_cone(light_cone_tuple)
+        if not light_cone_data:
+            result_msg = "不存在该角色的光锥推荐信息"
+            logger.info(result_msg)
+            return Response(result_msg, status=status.HTTP_404_NOT_FOUND)
+
+        logger.info("查询光锥信息成功!")
+        return Response(light_cone_data, status=status.HTTP_200_OK)
+
+    except ValueError as e:
+        logger.error(f"查询出错:{str(e)}")
+        return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    except Exception as e:
+        logger.error(f"查询出错(服务器内部错误):{str(e)}")
+        return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)

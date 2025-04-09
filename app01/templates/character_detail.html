@@ -162,6 +162,15 @@
             border: 1px solid rgba(113, 76, 255, 0.2);
         }
 
+        /* 光锥列表 */
+        .light-cone-list{
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 12px;
+            color: var(--text-light);
+            border: 1px solid rgba(113, 76, 255, 0.2);
+        }
+
         /* 基础技能项样式 */
         .skill-item {
             margin-bottom: 25px;
@@ -235,6 +244,19 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
+        .light-cone-title{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-family: "Roboto", "Arial", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         .skill-icon {
             width: 28px;
             height: 28px;
@@ -253,6 +275,26 @@
             line-height: 1.8;
             color: var(--text-light);
             border: 1px solid rgba(113, 76, 255, 0.2);
+        }
+
+        .light-cone{
+            padding: 25px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            line-height: 1.8;
+            color: var(--text-light);
+            border: 1px solid rgba(113, 76, 255, 0.2);
+        }
+
+        .light-cone-item{
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3); /* 半透明白色背景 */
+            border: 1px solid rgba(154, 134, 195, 0.6); /* 淡紫色边框（主色） */
+            border-radius: 12px; /* 圆角边框，柔和视觉 */
+            border-left: 4px solid #9A86C3; /* 加粗左边框，突出视觉层次 */
+            transition: all 0.3s ease; /* 平滑过渡动画 */
+            box-shadow: 0 2px 8px rgba(154, 134, 195, 0.2); /* 淡紫色阴影 */
         }
 
         /* 响应式设计 */
@@ -349,9 +391,24 @@
             </div>
 
             <!-- 右侧光锥区 -->
-            <div class="character-story">
-                <h2 class="section-title">背景故事</h2>
-                <p>{{ character.description }}</p>
+             <div class="light-cone-list">
+                <h2 class="section-title">光锥推荐</h2>
+                {% for lightcone in lightcones %}
+                 <div class="light-cone-item">
+                    <div class="light-cone-title">
+                        <img src="${lightcone.cone_image}"
+                             alt="${lightcone.name}"
+                             class="character-constellation"
+                             onerror="this.src='/static/images/default.png'">
+                        【${lightcone.rarity}】 ${lightcone.name}
+                    </div>
+                    <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
+                    <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
+                    <p>【生命值】: ${lightcone.base_hp || '无描述'}</p>
+                    <p class="constellationName-desc">${lightcone.skill_name || '无描述'}</p>
+                    <p class="constellationName-desc">${lightcone.skill_effect || '无描述'}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </main>
@@ -394,14 +451,16 @@
         }
 
         // 3. 并行请求技能和星魂数据
-        const [skillsResponse, constellationsResponse] = await Promise.all([
+        const [skillsResponse, constellationsResponse, lightconeResponse] = await Promise.all([
             fetchData(`/api/characters/talent/${charId}/`, '技能数据获取失败'),
-            fetchData(`/api/characters/constellation/${charId}/`, '星魂数据获取失败')
+            fetchData(`/api/characters/constellation/${charId}/`, '星魂数据获取失败'),
+            fetchData(`/api/characters/lightcone/${charId}/`, '光锥数据获取失败')
         ]);
 
         // 4. 渲染成功返回的数据
         if (skillsResponse) renderSkills(skillsResponse);
         if (constellationsResponse) renderConstellation(constellationsResponse);
+        if (lightconeResponse) renderLightcone(lightconeResponse);
     });
 
     // 函数：渲染技能列表（简化DOM操作）
@@ -438,6 +497,32 @@
                         【${constellation.level}】 ${constellation.name}
                     </div>
                     <p class="constellationName-desc">${constellation.description || '无描述'}</p>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', item);
+        });
+    }
+
+    // 函数：渲染光锥列表（简化DOM操作）
+    function renderLightcone(lightconeList) {
+        const container = document.querySelector('.light-cone-list');
+        container.innerHTML = ''; // 清空旧内容
+
+        lightconeList.forEach(lightcone => {
+            const item = `
+                <div class="light-cone-item">
+                    <div class="light-cone-title">
+                        <img src="${lightcone.cone_image}"
+                             alt="${lightcone.name}"
+                             class="character-constellation"
+                             onerror="this.src='/static/images/default.png'">
+                        【${lightcone.rarity}】 ${lightcone.name}
+                    </div>
+                    <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
+                    <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
+                    <p>【生命值】: ${lightcone.base_hp || '无描述'}</p>
+                    <p class="constellationName-desc">${lightcone.skill_name || '无描述'}</p>
+                    <p class="constellationName-desc">${lightcone.skill_effect || '无描述'}</p>
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', item);

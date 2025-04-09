@@ -157,6 +157,7 @@ class CharacterService:
             return result
         except Exception as e:
             logger.error(f"角色技能信息查询出错: {str(e)}")
+            return None
 
     @classmethod
     def get_character_constellation(cls, char_id):
@@ -186,3 +187,28 @@ class CharacterService:
             return result
         except Exception as e:
             logger.error(f"角色星魂信息查询出错: {str(e)}")
+            return None
+
+    @classmethod
+    def get_light_cone(cls, char_id):
+        try:
+            query_sql = """
+               SELECT
+                    * 
+               FROM
+                   light_cone
+                   RIGHT JOIN character_light_cones ON light_cone.id = character_light_cones.light_cone_id
+               WHERE
+                   character_id = %s
+               """
+            result = MySQLExecutor.execute(
+                query_sql,
+                params=(char_id,),
+                fetch_all=True
+            )
+            if not result:  # 处理空结果
+                return None
+            return result
+        except Exception as e:
+            logger.error(f"适配光锥信息查询出错: {str(e)}")
+            return None
