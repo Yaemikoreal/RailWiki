@@ -11,10 +11,10 @@ logger = logging.getLogger(__name__)  # 自动继承全局配置
 
 class CharacterService:
     @classmethod
-    def get_character_msg(cls, character_id):
+    def get_character_msg(cls, char_id):
         """
         获取单个角色信息并返回角色信息字典
-        :param character_id: 角色ID
+        :param char_id: 角色ID
         :return:
         """
         try:
@@ -27,19 +27,15 @@ class CharacterService:
                         rarity,
                         position,
                         description,
-                        release_date,
-                        character_image_1,
-                        character_image_2,
-                        character_image_3 
+                        release_date
                     FROM
                         characters
-                        RIGHT JOIN character_images ON characters.id = character_images.character_id 
                     WHERE
                         id = %s
                 """
             result = MySQLExecutor.execute(
                 query_sql,
-                params=(character_id,),
+                params=(char_id,),
                 fetch_one=True
             )
             if not result:  # 处理空结果
@@ -48,9 +44,10 @@ class CharacterService:
                 "id", "name", "element",
                 "path", "rarity", "position",
                 "description", "release_date",
-                "character_image_1", "character_image_2", "character_image_3"
+                # "character_image_1", "character_image_2", "character_image_3"
             ]
             character_dt = dict(zip(keys, result))
+            character_dt['release_date'] = character_dt.get('release_date').strftime("%Y/%m/%d")
             return character_dt
         except Exception as e:
             logger.error(f"角色查询出错: {str(e)}")
@@ -98,13 +95,9 @@ class CharacterService:
                 element,
                 path,
                 rarity,
-                position,
-                character_image_1,
-                character_image_2,
-                character_image_3 
+                position
             FROM
                 characters
-                RIGHT JOIN character_images ON characters.id = character_images.character_id
             """
         if conditions:
             sql += " WHERE " + " AND ".join(conditions)
@@ -118,13 +111,16 @@ class CharacterService:
             )
             keys = [
                 "id", "name", "element",
-                "path", "rarity", "position",
-                "character_image_1", "character_image_2", "character_image_3"
+                "path", "rarity", "position"
             ]
             # 结果整合为list
             characters_lt = [tools.tuple_to_dict(keys=keys, data=row) for row in result]
             if not characters_lt:
                 return None
+            for row in characters_lt:
+                row['character_image_1'] = f"""/static/images/characters/{row.get('id')}/{row.get('name')}_1.png"""
+                row['character_image_2'] = f"""/static/images/characters/{row.get('id')}/{row.get('name')}_2.png"""
+                row['character_image_3'] = f"""/static/images/characters/{row.get('id')}/{row.get('name')}_3.png"""
             return characters_lt
         except Exception as e:
             print(f"数据库查询异常: {str(e)}")
@@ -191,6 +187,11 @@ class CharacterService:
 
     @classmethod
     def get_light_cone(cls, char_id):
+        """
+        获取角色适配光锥
+        :param char_id:
+        :return:
+        """
         try:
             query_sql = """
                SELECT

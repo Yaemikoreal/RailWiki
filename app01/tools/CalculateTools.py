@@ -77,3 +77,10 @@ def calculate_light_cone(result: tuple) -> []:
         }
         light_cone.append(data_dt)
     return light_cone
+
+
+def calculate_character(character_data: dict) -> dict:
+    character_data['character_image_1'] = f"""/static/images/characters/{character_data.get('id')}/{character_data.get('name')}_1.png"""
+    character_data['character_image_2'] = f"""/static/images/characters/{character_data.get('id')}/{character_data.get('name')}_2.png"""
+    character_data['character_image_3'] = f"""/static/images/characters/{character_data.get('id')}/{character_data.get('name')}_3.png"""
+    return character_data

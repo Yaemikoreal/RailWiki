@@ -12,5 +12,5 @@ urlpatterns = [
     path('character_detail/', show_character_detail, name='character-detail'),  # 角色详情页
     path('talent/<int:char_id>/', find_character_talent, name='character_talent'),  # 角色天赋技能信息查询
     path('constellation/<int:char_id>/', find_characters_constellation, name='character_constellation'),  # 角色星魂信息查询
-    path('lightcone/<int:char_id>/', find_light_cone, name='find_light_cone')
+    path('lightcone/<int:char_id>/', find_light_cone, name='find_light_cone')  # 角色适配光锥查询
 ]

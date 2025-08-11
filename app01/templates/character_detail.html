@@ -10,6 +10,14 @@
             --primary-color: #FAFAFA;
             --secondary-color: #4A5568;
             --text-light: #1A1A1A;
+            --value-bg: rgba(113, 76, 255, 0.2); /* 默认背景色 */
+            --value-border: var(--primary-color); /* 默认边框色 */
+            --value-text: var(--text-light); /* 默认文字色 */
+            --value-bg-hover: rgba(113, 76, 255, 0.3); /* 悬停背景色 */
+            --key-bg: rgba(255, 255, 255, 0.1); /* 默认背景 */
+            --key-border: var(--secondary-color); /* 默认边框 */
+            --key-text: var(--text-light); /* 默认文字颜色 */
+            --key-bg-hover: rgba(255, 255, 255, 0.2); /* 悬停背景 */
         }
 
         /* 背景层 */
@@ -45,7 +53,7 @@
 
         .character-thumbnail {
             width: 220px;
-            height: 320px;
+            height: 348px;
             border-radius: 12px;
             object-fit: cover;
             border: 2px solid var(--primary-color);
@@ -77,17 +85,55 @@
             margin-bottom: 10px;
         }
 
-        .character-tag {
-            padding: 8px 15px;
-            border-radius: 20px;
-            background: rgba(113, 76, 255, 0.2);
-            border: 1px solid var(--primary-color);
-            color: var(--text-light);
-            font-family: "Segoe UI", "Arial", sans-serif; /* 游戏常用字体，清晰易读 */
-            font-size: 16px; /* 稍大的字体，提升可读性 */
-            font-weight: 600; /* 加粗，突出标签 */
-            line-height: 1.4; /* 行高优化排版 */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 微软雅黑，提升文字立体感 */
+        /* 容器样式（包裹 key-value 对） */
+        .stat-container {
+            background-color: transparent; /* 完全透明背景 */
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影突出显示 */
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px); /* 模糊背景（可选） */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* 半透明白色边框 */
+        }
+        /* Key-Value 对的父容器 */
+        .stat-item {
+            display: flex;
+            justify-content: space-between; /* key 左对齐，value 右对齐 */
+            align-items: center;
+            gap: 20px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 分割线（可选） */
+            width: 230px;
+            height: 40px;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none; /* 移除最后一个项的下边框 */
+        }
+
+        /* Key 样式（属性名） */
+        .character-key {
+            font-weight: 600; /* 加粗 */
+            color: #222; /* 深灰色，确保在白色背景上清晰 */
+            font-size: 16px;
+            line-height: 1.3;
+            white-space: nowrap; /* 防止换行 */
+        }
+
+        /* Value 样式（属性值） */
+        .character-value {
+            font-weight: 400; /* 不加粗 */
+            color: #4A5568; /* 深灰色，与 key 对比 */
+            font-size: 16px;
+            line-height: 1.3;
+            text-align: right; /* 右对齐 */
+            white-space: nowrap; /* 防止换行 */
+        }
+
+        /* 悬停效果（可选） */
+        .stat-item:hover {
+            background-color: rgba(230, 230, 230, 0.2); /* 轻微背景变化 */
+            cursor: default; /* 根据需求调整 */
         }
 
         /* 基础属性容器 */
@@ -266,6 +312,11 @@
              width: 100px;
              height: 100px;
         }
+        .light-cone-image{
+            width: 100px;
+            height: 141px;
+
+        }
 
         /* 背景故事 */
         .character-story {
@@ -325,18 +376,22 @@
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;">
-            <img src="{{ character.character_image_3 }}"
-                 alt="{{ character.name }}"
-                 class="character-thumbnail"
-                 onerror="this.src='{% static 'images/default.png' %}'">
-
             <div class="character-meta">
                 <h1 class="character-name">{{ character.name }}</h1>
-                <div class="character-tags">
-                    <span class="character-tag">{{ character.element }}</span>
-                    <span class="character-tag">{{ character.path }}</span>
-                    <span class="character-tag">{{ character.rarity }}星角色</span>
+
+                <div class="stat-item">
+                    <span class="stat-label">属性</span>
+                    <span class="stat-value">{{ character.element }}</span>
                 </div>
+                <div class="stat-item">
+                    <span class="stat-label">命途</span>
+                    <span class="stat-value">{{ character.path }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">实装日期</span>
+                    <span class="stat-value">{{ character.release_date }}</span>
+                </div>
+
 
                 <!-- 属性数值面板 -->
                 <div class="stats-grid">
@@ -398,14 +453,14 @@
                     <div class="light-cone-title">
                         <img src="${lightcone.cone_image}"
                              alt="${lightcone.name}"
-                             class="character-constellation"
+                             class="light-cone-image"
                              onerror="this.src='/static/images/default.png'">
                         【${lightcone.rarity}】 ${lightcone.name}
                     </div>
                     <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
                     <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
                     <p>【生命值】: ${lightcone.base_hp || '无描述'}</p>
-                    <p class="constellationName-desc">${lightcone.skill_name || '无描述'}</p>
+                    <p class="skill-title">${lightcone.skill_name || '无描述'}</p>
                     <p class="constellationName-desc">${lightcone.skill_effect || '无描述'}</p>
                 </div>
                 {% endfor %}
@@ -514,7 +569,7 @@
                     <div class="light-cone-title">
                         <img src="${lightcone.cone_image}"
                              alt="${lightcone.name}"
-                             class="character-constellation"
+                             class="light-cone-image"
                              onerror="this.src='/static/images/default.png'">
                         【${lightcone.rarity}】 ${lightcone.name}
                     </div>

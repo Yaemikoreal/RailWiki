@@ -24,7 +24,7 @@ def character_detail(request, pk):
     character_id = pk
     try:
         character_data = CharacterService.get_character_msg(character_id)
-
+        character_data = tools.calculate_character(character_data)
         if not character_data:
             result_msg = "不存在该ID的角色"
             logger.info(result_msg)
@@ -81,6 +81,7 @@ def show_character_detail(request):
     try:
         # 获取基础角色数据
         character_data = CharacterService.get_character_msg(pk)
+        character_data = tools.calculate_character(character_data)
 
         if not character_data:
             logger.warning(f"角色不存在 ID: {pk}")
