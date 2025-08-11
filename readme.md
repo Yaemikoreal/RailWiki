@@ -87,3 +87,8 @@ python manage.py  runserver
 │     
 └── 📄 manage.py                # Django管理脚本
 ```
+📂 项目Demo展示
+
+![img.png](img.png)
+
+![img_1.png](img_1.png)
