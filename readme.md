@@ -89,6 +89,6 @@ python manage.py  runserver
 ```
 📂 项目Demo展示
 
-![img.png](img.png)
+![img.png](/img.png)
 
-![img_1.png](img_1.png)
+![img_1.png](/img_1.png)
