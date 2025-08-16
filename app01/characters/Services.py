@@ -47,7 +47,10 @@ class CharacterService:
                 # "character_image_1", "character_image_2", "character_image_3"
             ]
             character_dt = dict(zip(keys, result))
-            character_dt['release_date'] = character_dt.get('release_date').strftime("%Y/%m/%d")
+            if character_dt['release_date']:
+                character_dt['release_date'] = character_dt.get('release_date').strftime("%Y/%m/%d")
+            else:
+                character_dt['release_date'] = "暂无"
             return character_dt
         except Exception as e:
             logger.error(f"角色查询出错: {str(e)}")
@@ -198,7 +201,7 @@ class CharacterService:
                     * 
                FROM
                    light_cone
-                   RIGHT JOIN character_light_cones ON light_cone.id = character_light_cones.light_cone_id
+                   RIGHT JOIN character_light_cones ON light_cone.name = character_light_cones.light_cone_name
                WHERE
                    character_id = %s
                """
