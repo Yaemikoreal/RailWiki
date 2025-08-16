@@ -186,16 +186,17 @@
         /* 主体布局 */
         .character-body {
             display: grid;
-            grid-template-columns: 7fr 3fr;
+            grid-template-columns: 7fr 3fr;  /* 7:3 比例 */
             gap: 40px;
         }
 
-        /* 技能列表 */
+        /* 技能区 - 固定高度 + 滚动条 */
         .skill-list {
-            background: rgba(255,255,255,0.05);
-            padding: 25px;
+            max-height: 800px;  /* 固定高度 */
+            overflow-y: auto;   /* 超出时显示滚动条 */
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            color: var(--text-light);
             border: 1px solid rgba(113, 76, 255, 0.2);
         }
 
@@ -318,10 +319,10 @@
 
         }
 
-        /* 背景故事 */
+        /* 背景故事 - 自适应高度 */
         .character-story {
             padding: 25px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             line-height: 1.8;
             color: var(--text-light);
@@ -372,10 +373,10 @@
     <main class="main-content">
         <!-- 角色头部信息 -->
         <div class="character-header"
-                style="background-image: url('{{ character.character_image_1 }}');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
+                style="background-image: url('{{ character.character_image_2  }}');
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: contain;">
             <div class="character-meta">
                 <h1 class="character-name">{{ character.name }}</h1>
 
@@ -455,7 +456,7 @@
                              alt="${lightcone.name}"
                              class="light-cone-image"
                              onerror="this.src='/static/images/default.png'">
-                        【${lightcone.rarity}】 ${lightcone.name}
+                         ${lightcone.name}
                     </div>
                     <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
                     <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
@@ -571,7 +572,7 @@
                              alt="${lightcone.name}"
                              class="light-cone-image"
                              onerror="this.src='/static/images/default.png'">
-                        【${lightcone.rarity}】 ${lightcone.name}
+                        ${lightcone.name}
                     </div>
                     <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
                     <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
