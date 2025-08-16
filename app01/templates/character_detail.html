@@ -37,10 +37,11 @@
             max-width: 1200px;
             margin: 40px auto;
             padding: 30px;
-            background: rgba(255, 255, 254, 0.9);
+            background: rgba(30, 30, 40, 0.9); /* 深灰背景 */
             backdrop-filter: blur(10px);
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(113, 76, 255, 0.3);
+            color: #fff; /* 白色文字 */
         }
 
         /* 角色头部信息 */
@@ -67,9 +68,8 @@
 
         .character-name {
             font-size: 2.5rem;
-            color: var(--text-light);
+            color: #fff;
             margin-bottom: 15px;
-            text-shadow: 0 0 15px var(--primary-color);
         }
 
         .character-tags {
@@ -192,30 +192,34 @@
 
         /* 技能区 - 固定高度 + 滚动条 */
         .skill-list {
-            max-height: 800px;  /* 固定高度 */
-            overflow-y: auto;   /* 超出时显示滚动条 */
+            max-height: 800px;
+            overflow-y: auto;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(40, 40, 50, 0.8); /* 深灰背景 */
             border-radius: 12px;
             border: 1px solid rgba(113, 76, 255, 0.2);
+            color: #fff;
         }
 
-        /* 星魂列表 */
-        .constellation-list{
-            background: rgba(255,255,255,0.05);
+        /* 星魂列表 - 固定高度+滚动条 */
+        .constellation-list {
+            background: rgba(40, 40, 50, 0.8); /* 深灰背景 */
             padding: 25px;
             border-radius: 12px;
-            color: var(--text-light);
+            color: #fff;
             border: 1px solid rgba(113, 76, 255, 0.2);
         }
 
         /* 光锥列表 */
-        .light-cone-list{
-            background: rgba(255,255,255,0.05);
+        .light-cone-list {
+            background: rgba(40, 40, 50, 0.8); /* 深灰背景 */
             padding: 25px;
             border-radius: 12px;
-            color: var(--text-light);
+            color: #fff;
             border: 1px solid rgba(113, 76, 255, 0.2);
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         /* 基础技能项样式 */
@@ -270,7 +274,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: var(--text-light);
+            color: #fff;
             margin-bottom: 10px;
             font-family: "Roboto", "Arial", sans-serif;
             font-size: 18px;
@@ -283,7 +287,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: var(--text-light);
+            color: #fff;
             margin-bottom: 10px;
             font-family: "Roboto", "Arial", sans-serif;
             font-size: 18px;
@@ -296,7 +300,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: var(--text-light);
+            color: #fff;
             margin-bottom: 10px;
             font-family: "Roboto", "Arial", sans-serif;
             font-size: 18px;
@@ -318,14 +322,18 @@
             height: 141px;
 
         }
+        /* 光锥容器 */
+        .light-cone-container {
+            margin-top: 20px;
+        }
 
         /* 背景故事 - 自适应高度 */
         .character-story {
             padding: 25px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(40, 40, 50, 0.8); /* 深灰背景 */
             border-radius: 12px;
             line-height: 1.8;
-            color: var(--text-light);
+            color: #fff;
             border: 1px solid rgba(113, 76, 255, 0.2);
         }
 
@@ -371,28 +379,29 @@
     <div class="background-container"></div>
 
     <main class="main-content">
-        <!-- 角色头部信息 -->
+    <!-- 角色头部信息 -->
+    <section class="character-section">
+        <h2 class="main-section-title">角色信息</h2>
         <div class="character-header"
-                style="background-image: url('{{ character.character_image_2  }}');
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;">
+             style="background-image: url('{{ character.character_image_2  }}');
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;">
             <div class="character-meta">
-                <h1 class="character-name">{{ character.name }}</h1>
+                <h1 class="character-name">{{ character.name  }}</h1>
 
                 <div class="stat-item">
                     <span class="stat-label">属性</span>
-                    <span class="stat-value">{{ character.element }}</span>
+                    <span class="stat-value">{{ character.element  }}</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">命途</span>
-                    <span class="stat-value">{{ character.path }}</span>
+                    <span class="stat-value">{{ character.path  }}</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">实装日期</span>
-                    <span class="stat-value">{{ character.release_date }}</span>
+                    <span class="stat-value">{{ character.release_date  }}</span>
                 </div>
-
 
                 <!-- 属性数值面板 -->
                 <div class="stats-grid">
@@ -404,70 +413,84 @@
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- 主体内容，包含技能区和故事区 -->
+    <!-- 技能和故事区 -->
+    <section class="character-section">
+        <h2 class="main-section-title">角色能力</h2>
         <div class="character-body">
             <!-- 左侧技能区 -->
             <div class="skill-list">
-                <h2 class="section-title">天赋技能</h2>
+                <h3 class="subsection-title">天赋技能</h3>
                 {% for skill in skills %}
                 <div class="skill-item">
                     <div class="skill-title">
-                        <span>{{ skill.name }}{{ skill.type }}</span>
+                        <span>{{ skill.name  }}{{ skill.type  }}</span>
                     </div>
-                    <p class="skill-desc">{{ skill.description }}</p>
+                    <p class="skill-desc">{{ skill.description  }}</p>
                 </div>
                 {% endfor %}
             </div>
 
             <!-- 右侧背景故事 -->
             <div class="character-story">
-                <h2 class="section-title">背景故事</h2>
-                <p>{{ character.description }}</p>
+                <h3 class="subsection-title">背景故事</h3>
+                <p>{{ character.description  }}</p>
             </div>
         </div>
+    </section>
 
-        <!-- 主体内容，星魂区和光锥区 -->
-        <div class="character-body">
-            <!-- 左侧星魂区 -->
+    <!-- 星魂和光锥区 -->
+    <section class="character-section">
+        <h2 class="main-section-title">进阶培养</h2>
+
+        <!-- 星魂区（固定高度+滚动条） -->
+        <div class="constellation-container">
+            <h3 class="subsection-title">角色星魂</h3>
             <div class="constellation-list">
-                <h2 class="section-title">角色星魂</h2>
                 {% for constellation in constellations %}
                 <div class="constellation-item">
-                     <img src="{{ constellation.image}}"
-                         alt="{{ constellation.name}}"
+                    <img src="{{ constellation.image  }}"
+                         alt="{{ constellation.name  }}"
                          class="character-constellation"
-                         onerror="this.src='{% static 'images/default.png' %}'">
+                         onerror="this.src='{%  static 'images/default.png'  %}'">
                     <div class="skill-title">
-                        <span>{{ constellation.level }}{{ constellation.name }}</span>
+                        <span>{{ constellation.level  }}{{ constellation.name  }}</span>
                     </div>
-                    <p class="constellation-desc">{{ constellation.description }}</p>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- 右侧光锥区 -->
-             <div class="light-cone-list">
-                <h2 class="section-title">光锥推荐</h2>
-                {% for lightcone in lightcones %}
-                 <div class="light-cone-item">
-                    <div class="light-cone-title">
-                        <img src="${lightcone.cone_image}"
-                             alt="${lightcone.name}"
-                             class="light-cone-image"
-                             onerror="this.src='/static/images/default.png'">
-                         ${lightcone.name}
-                    </div>
-                    <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
-                    <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
-                    <p>【生命值】: ${lightcone.base_hp || '无描述'}</p>
-                    <p class="skill-title">${lightcone.skill_name || '无描述'}</p>
-                    <p class="constellationName-desc">${lightcone.skill_effect || '无描述'}</p>
+                    <p class="constellation-desc">{{ constellation.description  }}</p>
                 </div>
                 {% endfor %}
             </div>
         </div>
-    </main>
+
+        <!-- 光锥推荐（星魂下方） -->
+        <div class="light-cone-container">
+            <h3 class="subsection-title">光锥推荐</h3>
+            <div class="light-cone-list">
+                {% for lightcone in lightcones %}
+                <div class="light-cone-item">
+                    <div class="light-cone-title">
+                        <img src="{{ lightcone.cone_image  }}"
+                             alt="{{ lightcone.name  }}"
+                             class="light-cone-image"
+                             onerror="this.src='/static/images/default.png'">
+                        {{ lightcone.name  }}
+                    </div>
+                    <div class="light-cone-stats">
+                        <p>【攻击力】: {{ lightcone.base_attack |default:"无描述" }}</p>
+                        <p>【防御力】: {{ lightcone.base_defense |default:"无描述" }}</p>
+                        <p>【生命值】: {{ lightcone.base_hp |default:"无描述" }}</p>
+                    </div>
+                    <div class="light-cone-skills">
+                        <p class="skill-title">{{ lightcone.skill_name |default:"无描述" }}</p>
+                        <p class="skill-desc">{{ lightcone.skill_effect |default:"无描述" }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
 
     <script>
     // 动态粒子背景效果（可选）
