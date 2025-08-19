@@ -32,6 +32,12 @@
                         url("{% static 'images/bg1.png' %}") center/cover;
         }
 
+        .character-bigimg{
+            width: 800px;
+            height: 800px;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
         /* 主内容容器 */
         .main-content {
             max-width: 1200px;
@@ -52,14 +58,13 @@
             position: relative;
         }
 
-        .character-thumbnail {
-            width: 220px;
-            height: 348px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            box-shadow: 0 0 20px rgba(113, 76, 255, 0.3);
+        .skill-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 8px;
+            margin-right: 1rem;
         }
+
 
         .character-meta {
             flex: 1;
@@ -70,30 +75,6 @@
             font-size: 2.5rem;
             color: #fff;
             margin-bottom: 15px;
-        }
-
-        .character-tags {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .section-title{
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-light);
-            margin-bottom: 10px;
-        }
-
-        /* 容器样式（包裹 key-value 对） */
-        .stat-container {
-            background-color: transparent; /* 完全透明背景 */
-            border-radius: 12px;
-            padding: 15px 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影突出显示 */
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px); /* 模糊背景（可选） */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* 半透明白色边框 */
         }
         /* Key-Value 对的父容器 */
         .stat-item {
@@ -111,24 +92,6 @@
             border-bottom: none; /* 移除最后一个项的下边框 */
         }
 
-        /* Key 样式（属性名） */
-        .character-key {
-            font-weight: 600; /* 加粗 */
-            color: #222; /* 深灰色，确保在白色背景上清晰 */
-            font-size: 16px;
-            line-height: 1.3;
-            white-space: nowrap; /* 防止换行 */
-        }
-
-        /* Value 样式（属性值） */
-        .character-value {
-            font-weight: 400; /* 不加粗 */
-            color: #4A5568; /* 深灰色，与 key 对比 */
-            font-size: 16px;
-            line-height: 1.3;
-            text-align: right; /* 右对齐 */
-            white-space: nowrap; /* 防止换行 */
-        }
 
         /* 悬停效果（可选） */
         .stat-item:hover {
@@ -136,14 +99,6 @@
             cursor: default; /* 根据需求调整 */
         }
 
-        /* 基础属性容器 */
-        .stat-container {
-            background: white; /* 纯白背景 */
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
-            margin-bottom: 30px;
-        }
 
         /* 单个属性项容器 */
         .stat-item {
@@ -161,18 +116,18 @@
         /* 基础属性标签样式 */
         .stat-label {
             font-family: "Segoe UI", "Arial", sans-serif; /* 游戏常用字体，清晰易读 */
-            font-size: 16px; /* 稍大的字体，提升可读性 */
-            font-weight: 600; /* 加粗，突出标签 */
-            color: var(--text-light); /* 浅灰色，与深色背景形成对比 */
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
             line-height: 1.4; /* 行高优化排版 */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 微软雅黑，提升文字立体感 */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* 属性数值（如“1234”） */
         .stat-value {
             font-size: 18px;
             font-weight: 700; /* 加粗强调数值 */
-            color: var(--text-light); /* 深蓝色，突出关键数据 */
+            color: #fff; /* 深蓝色，突出关键数据 */
             text-align: right;
         }
 
@@ -252,12 +207,31 @@
             cursor: pointer; /* 提示可交互 */
         }
 
-        .stats-grid {
-            margin-bottom: 25px;
-            padding: 20px;
-            {#background: rgba(255,255,255,0.3);#}
-            {#border-left: 3px solid var(--primary-color);#}
-            {#transition: all 0.3s ease;#}
+        /* 单个属性项样式 */
+        .stats-grid .stat-item {
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+            padding: 15px;
+            background: rgba(50, 50, 60, 0.7);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stats-grid .stat-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .stats-grid .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
         }
 
         /* 悬停效果 */
@@ -283,18 +257,6 @@
             letter-spacing: 1px;
         }
 
-        .constellation-title{
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #fff;
-            margin-bottom: 10px;
-            font-family: "Roboto", "Arial", sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
 
         .light-cone-title{
             display: flex;
@@ -308,18 +270,23 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .skill-icon {
-            width: 28px;
-            height: 28px;
+        .character-icon {
+            width: 48px;
+            height: 48px;
             border-radius: 5px;
         }
         .character-constellation{
-             width: 100px;
-             height: 100px;
+             width: 200px;
+             height: 200px;
+        }
+        .general_data{
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
         }
         .light-cone-image{
-            width: 100px;
-            height: 141px;
+            width: 150px;
+            height: 212px;
 
         }
         /* 光锥容器 */
@@ -337,14 +304,6 @@
             border: 1px solid rgba(113, 76, 255, 0.2);
         }
 
-        .light-cone{
-            padding: 25px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            line-height: 1.8;
-            color: var(--text-light);
-            border: 1px solid rgba(113, 76, 255, 0.2);
-        }
 
         .light-cone-item{
             margin-bottom: 25px;
@@ -357,6 +316,14 @@
             box-shadow: 0 2px 8px rgba(154, 134, 195, 0.2); /* 淡紫色阴影 */
         }
 
+        .light-cone-item:hover {
+            transform: translateY(-3px); /* 微提升动画 */
+            background: rgba(154, 134, 195, 0.1); /* 淡紫色背景 */
+            border-color: #9A86C3; /* 悬停时边框颜色加深 */
+            box-shadow: 0 4px 12px rgba(154, 134, 195, 0.4); /* 深化阴影 */
+            cursor: pointer; /* 提示可交互 */
+        }
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             .character-body {
@@ -367,10 +334,8 @@
                 flex-direction: column;
             }
 
-            .character-thumbnail {
-                width: 100%;
-                height: auto;
-                max-height: 400px;
+            .stats-grid .stat-item {
+                max-width: 100%;
             }
         }
     </style>
@@ -382,37 +347,65 @@
     <!-- 角色头部信息 -->
     <section class="character-section">
         <h2 class="main-section-title">角色信息</h2>
-        <div class="character-header"
-             style="background-image: url('{{ character.character_image_2  }}');
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: contain;">
+        <div class="character-header">
             <div class="character-meta">
                 <h1 class="character-name">{{ character.name  }}</h1>
-
                 <div class="stat-item">
                     <span class="stat-label">属性</span>
-                    <span class="stat-value">{{ character.element  }}</span>
+                    <img src="{{ character.element_img  }}"
+                         alt="{{ character.element  }}"
+                         class="character-icon"
+                         onerror="this.src='{%  static 'images/default.png'  %}'">
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">命途</span>
-                    <span class="stat-value">{{ character.path  }}</span>
+                    <img src="{{ character.path_img  }}"
+                         alt="{{ character.path  }}"
+                         class="character-icon"
+                         onerror="this.src='{%  static 'images/default.png'  %}'">
+                </div>
+{#                <div class="stat-item">#}
+{#                    <span class="stat-label">角色定位</span>#}
+{#                    <span class="stat-value">{{ character.position  }}</span>#}
+{#                </div>#}
+                <div class="stat-item">
+                    <img src="{% static 'images/general/_HP.png' %}"
+                                 alt="{% static 'images/general/_HP.png' %}"
+                                 class="general_data">
+                    <div class="stat-value">{{ character.base_hp }}</div>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">实装日期</span>
-                    <span class="stat-value">{{ character.release_date  }}</span>
+                    <img src="{% static 'images/general/_ATK.png' %}"
+                                 alt="{% static 'images/general/_ATK.png' %}"
+                                 class="general_data">
+                    <div class="stat-value">{{ character.base_attack }}</div>
                 </div>
-
-                <!-- 属性数值面板 -->
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">基础生命</div>
-                        <div class="stat-value">1234</div>
-                    </div>
-                    <!-- 其他属性... -->
+                <div class="stat-item">
+                    <img src="{% static 'images/general/_DEF.png' %}"
+                                 alt="{% static 'images/general/_DEF.png' %}"
+                                 class="general_data">
+                    <div class="stat-value">{{ character.base_defense }}</div>
+                </div>
+                <div class="stat-item">
+                    <img src="{% static 'images/general/_SPD.png' %}"
+                                 alt="{% static 'images/general/_SPD.png' %}"
+                                 class="general_data">
+                    <div class="stat-value">{{ character.base_speed }}</div>
+                </div>
+                <div class="stat-item">
+                    <img src="{% static 'images/general/_ENERGY.png' %}"
+                                 alt="{% static 'images/general/_ENERGY.png' %}"
+                                 class="general_data">
+                    <div class="stat-value">{{ character.ultimate_energy }}</div>
                 </div>
             </div>
+            <img src="{{ character.character_image_2  }}"
+                         alt="{{ character.element  }}"
+                         class="character-bigimg"
+                         onerror="this.src='{%  static 'images/default.png'  %}'">
         </div>
+
+
     </section>
 
     <!-- 技能和故事区 -->
@@ -425,6 +418,10 @@
                 {% for skill in skills %}
                 <div class="skill-item">
                     <div class="skill-title">
+                        <img src="{{ skill.skill_img  }}"
+                         alt="{{ skill.name  }}"
+                         class="skill-icon"
+                         onerror="this.src='{%  static 'images/default.png'  %}'">
                         <span>{{ skill.name  }}{{ skill.type  }}</span>
                     </div>
                     <p class="skill-desc">{{ skill.description  }}</p>
@@ -477,9 +474,18 @@
                         {{ lightcone.name  }}
                     </div>
                     <div class="light-cone-stats">
-                        <p>【攻击力】: {{ lightcone.base_attack |default:"无描述" }}</p>
-                        <p>【防御力】: {{ lightcone.base_defense |default:"无描述" }}</p>
-                        <p>【生命值】: {{ lightcone.base_hp |default:"无描述" }}</p>
+                        <p>
+                        <img src="{% static 'images/general/_ATK.png' %}"
+                             alt="{% static 'images/general/_ATK.png' %}"
+                             class="general_data"> { lightcone.base_attack || '无描述'}</p>
+                        <p>
+                            <img src="{% static 'images/general/_DEF.png' %}"
+                                 alt="{% static 'images/general/_DEF.png' %}"
+                                 class="general_data"> ${lightcone.base_defense || '无描述'}</p>
+                        <p>
+                            <img src="{% static 'images/general/_HP.png' %}"
+                                 alt="{% static 'images/general/_HP.png' %}"
+                                 class="general_data"> ${lightcone.base_hp || '无描述'}</p>
                     </div>
                     <div class="light-cone-skills">
                         <p class="skill-title">{{ lightcone.skill_name |default:"无描述" }}</p>
@@ -497,7 +503,7 @@
     function initParticles() {
         Particles.init({
             selector: '.background-container',
-            color: '#714CFF',
+            color: '#FFF',
             connectParticles: true,
             maxParticles: 50
         });
@@ -551,6 +557,10 @@
             const item = `
                 <div class="skill-item">
                     <div class="skill-title">
+                        <img src="${ skill.skill_img }"
+                         alt="${ skill.name  }"
+                         class="skill-icon"
+                         onerror="this.src='{%  static 'images/default.png'  %}'">
                         【${skill.type}】 ${skill.name}
                     </div>
                     <p class="skill-desc">${skill.description || '无描述'}</p>
@@ -597,9 +607,18 @@
                              onerror="this.src='/static/images/default.png'">
                         ${lightcone.name}
                     </div>
-                    <p>【攻击力】: ${lightcone.base_attack || '无描述'}</p>
-                    <p>【防御力】: ${lightcone.base_defense || '无描述'}</p>
-                    <p>【生命值】: ${lightcone.base_hp || '无描述'}</p>
+                    <p>
+                        <img src="{% static 'images/general/_ATK.png' %}"
+                             alt="{% static 'images/general/_ATK.png' %}"
+                             class="general_data"> ${ lightcone.base_attack || '无描述'}</p>
+                    <p>
+                        <img src="{% static 'images/general/_DEF.png' %}"
+                             alt="{% static 'images/general/_DEF.png' %}"
+                             class="general_data"> ${lightcone.base_defense || '无描述'}</p>
+                    <p>
+                        <img src="{% static 'images/general/_HP.png' %}"
+                             alt="{% static 'images/general/_HP.png' %}"
+                             class="general_data"> ${lightcone.base_hp || '无描述'}</p>
                     <p class="constellationName-desc">${lightcone.skill_name || '无描述'}</p>
                     <p class="constellationName-desc">${lightcone.skill_effect || '无描述'}</p>
                 </div>
