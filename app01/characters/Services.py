@@ -56,6 +56,45 @@ class CharacterService:
             logger.error(f"角色查询出错: {str(e)}")
 
     @classmethod
+    def get_character_primary_attributes(cls, char_id):
+        """
+        查询角色八十级基础数值信息
+        :param char_id:
+        :return:
+        """
+        try:
+            query_sql = """
+                   SELECT
+                       character_id,
+                       character_name,
+                       base_hp,
+                       base_speed,
+                       base_attack,
+                       base_defense,
+                       ultimate_energy
+                   FROM
+                       character_primary_attributes
+                   WHERE
+                       character_id = %s
+               """
+            result = MySQLExecutor.execute(
+                query_sql,
+                params=(char_id,),
+                fetch_one=True
+            )
+            if not result:  # 处理空结果
+                return None
+            keys = [
+                "id", "name",
+                "base_hp", "base_speed", "base_attack",
+                "base_defense", "ultimate_energy"
+            ]
+            character_dt = dict(zip(keys, result))
+            return character_dt
+        except Exception as e:
+            logger.error(f"角色八十级基础数据查询出错: {str(e)}")
+
+    @classmethod
     def get_characters_list(cls, data_dt):
         """
         动态条件查询角色列表
@@ -138,8 +177,10 @@ class CharacterService:
         try:
             query_sql = """
                     SELECT
+                        character_id,
                         skill_name,
                         skill_type,
+                        skill_sub_tag,
                         skill_description
                     FROM
                         character_talent

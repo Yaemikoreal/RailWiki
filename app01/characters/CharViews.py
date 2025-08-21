@@ -81,6 +81,8 @@ def show_character_detail(request):
     try:
         # 获取基础角色数据
         character_data = CharacterService.get_character_msg(pk)
+        character_primary_data = CharacterService.get_character_primary_attributes(pk)
+        character_data.update(character_primary_data)
         character_data = tools.calculate_character(character_data)
 
         if not character_data:
