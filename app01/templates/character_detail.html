@@ -400,9 +400,10 @@
                 </div>
             </div>
             <img src="{{ character.character_image_2  }}"
-                         alt="{{ character.element  }}"
-                         class="character-bigimg"
-                         onerror="this.src='{%  static 'images/default.png'  %}'">
+                 alt="{{ character.element  }}"
+                 class="character-bigimg"
+                 onerror="this.src='{%  static 'images/default.png'  %}'"
+                 loading="lazy">
         </div>
 
 
@@ -421,7 +422,8 @@
                         <img src="{{ skill.skill_img  }}"
                          alt="{{ skill.name  }}"
                          class="skill-icon"
-                         onerror="this.src='{%  static 'images/default.png'  %}'">
+                         onerror="this.src='{%  static 'images/default.png'  %}'"
+                         loading="lazy">
                         <span>{{ skill.name  }}{{ skill.type  }}</span>
                     </div>
                     <p class="skill-desc">{{ skill.description  }}</p>
@@ -450,7 +452,8 @@
                     <img src="{{ constellation.image  }}"
                          alt="{{ constellation.name  }}"
                          class="character-constellation"
-                         onerror="this.src='{%  static 'images/default.png'  %}'">
+                         onerror="this.src='{%  static 'images/default.png'  %}'"
+                         loading="lazy">
                     <div class="skill-title">
                         <span>{{ constellation.level  }}{{ constellation.name  }}</span>
                     </div>
@@ -470,7 +473,8 @@
                         <img src="{{ lightcone.cone_image  }}"
                              alt="{{ lightcone.name  }}"
                              class="light-cone-image"
-                             onerror="this.src='/static/images/default.png'">
+                             onerror="this.src='/static/images/default.png'"
+                             loading="lazy">
                         {{ lightcone.name  }}
                     </div>
                     <div class="light-cone-stats">
@@ -560,6 +564,7 @@
                         <img src="${ skill.skill_img }"
                          alt="${ skill.name  }"
                          class="skill-icon"
+                         loading="lazy"
                          onerror="this.src='{%  static 'images/default.png'  %}'">
                         【${skill.type}】 ${skill.name}
                     </div>
@@ -582,6 +587,7 @@
                         <img src="${constellation.image}"
                              alt="${constellation.name}"
                              class="character-constellation"
+                             loading="lazy"
                              onerror="this.src='/static/images/default.png'">
                         【${constellation.level}】 ${constellation.name}
                     </div>
@@ -604,6 +610,7 @@
                         <img src="${lightcone.cone_image}"
                              alt="${lightcone.name}"
                              class="light-cone-image"
+                             loading="lazy"
                              onerror="this.src='/static/images/default.png'">
                         ${lightcone.name}
                     </div>

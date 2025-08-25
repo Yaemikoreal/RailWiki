@@ -10,7 +10,7 @@
         body { min-height: 100vh; background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url("{% static 'images/bg1.png' %}") center/cover fixed; }
         .main-container { display: flex; flex-direction: column; align-items: center; padding: 2vh 5%; }
         .logo-section { text-align: center; margin: 2vh 0; animation: fadeInDown 1s ease; }
-        .logo { width: 80px; filter: drop-shadow(0 0 10px rgba(113, 76, 255, 0.8)); }
+        .logo { width: 100px; filter: drop-shadow(0 0 10px rgba(113, 76, 255, 0.8)); }
         .title { color: #fff; font-size: 2.5rem; text-shadow: 0 0 20px #714CFF; margin-top: 10px; }
         .nav-buttons { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; justify-content: center; }
         .nav-button { background: rgba(17, 23, 41, 0.8); border: 2px solid #4A5568; padding: 15px 25px; border-radius: 10px; color: #CBD5E0; font-size: 1.2rem; min-width: 180px; transition: all 0.3s ease; }
@@ -22,7 +22,7 @@
         .character-card { background: rgba(0, 0, 0, 0.25); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease; text-align: center; width: 140px; height: 310px;}
         .character-card:hover {transform: translateY(-5px);}
         .character-img { width: 100%; height: 234px; object-fit: cover; }
-        .character-name { color: black; padding: 8px; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .character-name { color: #333;padding: 8px;font-size: 0.95rem; font-weight: 500;white-space: nowrap;overflow: hidden;text-align: center;letter-spacing: 0.3px;line-height: 1.3; border-radius: 4px;margin: 0 5px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
         .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #714CFF; width: 20px; height: 20px; animation: spin 1s linear infinite; }
         .pagination-controls { width: 100%; text-align: center; padding: 20px 0; color: white; }
         .pagination-controls button { background: rgba(113, 76, 255, 0.3); border: 1px solid #714CFF; color: white; padding: 8px 16px; margin: 0 5px; border-radius: 4px; cursor: pointer; }
@@ -49,12 +49,12 @@
         </div>
 
         <!-- 导航按钮（已移除点击事件） -->
-        <div class="nav-buttons">
-            <button class="nav-button">🌟 角色图鉴</button>
-            <button class="nav-button">📖 攻略百科</button>
-            <button class="nav-button">⚒️ 养成指南</button>
-            <button class="nav-button">🛡️ 敌人资料</button>
-        </div>
+       <div class="nav-buttons">
+            <button class="nav-button" data-link="/wikiindex/">角色图鉴</button>
+            <button class="nav-button" data-link="/guides/">光锥仪器</button>
+            <button class="nav-button" data-link="/training/">养成指南</button>
+            <button class="nav-button" data-link="/enemies/">敌人资料</button>
+       </div>
 
         <!-- 筛选器 -->
         <div class="filters">
@@ -118,6 +118,12 @@
         let currentPage = 1;        // 当前页码
         const pageSize = 10;        // 每页显示数量
         let filterTimeout;          // 防抖定时器
+
+        document.querySelectorAll('.nav-button').forEach(button  => {
+            button.addEventListener('click',  function() {
+                window.location.href  = this.getAttribute('data-link');
+            });
+        });
 
         // 主加载函数：获取并显示角色数据
         async function loadCharacters() {
@@ -193,7 +199,8 @@
                     <img src="${char.character_image_3}"
                          alt="${char.name}"
                          class="character-img"
-                         onerror="this.src='{% static 'images/default.png' %}'"> <!-- 图片加载失败处理 -->
+                         onerror="this.src='{% static 'images/default.png' %}'"
+                         loading="lazy">
                     <div class="character-name">${char.name}</div>
                     <div class="character-meta">
                         <span class="element ${char.element}">${char.element}</span>
@@ -203,14 +210,10 @@
             `).join('');
         }
 
-        // 新增点击卡片跳转函数
+        // 点击卡片跳转函数
         function showCharacterDetail(characterId) {
-            // 方式1：直接跳转携带ID
+            // 直接跳转携带ID
             window.location.href = `/api/characters/character_detail/?id=${characterId}`;
-
-            {#// 方式2：存储到本地后跳转（推荐）#}
-            {#localStorage.setItem('selectedCharacterId', characterId);#}
-            {#window.location.href = '`/api/characters/ character_detail/`';#}
         }
 
         // 更新分页控件
@@ -259,11 +262,6 @@
 
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', loadCharacters);
-
-        // 移除所有旧版跳转逻辑（关键修复）
-        document.querySelectorAll('.nav-button').forEach(button => {
-            button.onclick = null;  // 清除点击事件
-        });
     </script>
 </body>
 </html>
