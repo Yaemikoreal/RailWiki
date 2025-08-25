@@ -76,18 +76,15 @@ def calculate_constellation(result: tuple) -> []:
 
 
 def calculate_light_cone(result: tuple) -> []:
-    light_cone = []
-    for it in result:
-        data_dt = {
-            "name": it[1],
-            "base_attack": it[2],
-            "base_hp": it[3],
-            "base_defense": it[4],
-            "skill_name": it[5],
-            "skill_effect": it[6],
-            "cone_image": f"""/static/images/lightcone/{it[1]}.png"""
-        }
-        light_cone.append(data_dt)
+    keys = [
+        "id", "name", "paths", "base_attack",
+        "base_hp", "base_defense", "skill_name", "skill_effect",
+        "char_cone_id", "char_id", "cone_name"
+    ]
+    # 结果整合为list
+    light_cone = [tuple_to_dict(keys=keys, data=row) for row in result]
+    for it in light_cone:
+        it["cone_image"] = f"""/static/images/lightcone/{it["name"]}.png"""
     return light_cone
 
 
