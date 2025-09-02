@@ -89,9 +89,9 @@ python manage.py  runserver
 ```
 ## 📂 项目Demo展示
 
-![img.png](/img.png)
+![img.png](./display/img.png)
 
-![img_1.png](/img_1.png)
-![img_2.png](/img_2.png)
-![img_3.png](/img_3.png)
-![img_4.png](/img_4.png)
+![img_1.png](./display/img_1.png)
+![img_2.png](./display/img_2.png)
+![img_3.png](./display/img_3.png)
+![img_4.png](./display/img_4.png)
